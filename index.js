@@ -93,10 +93,10 @@ async function run() {
       res.send(result);
     });
 
-    app.delete('/mycart/:id', async (req, res) => {
-      const id = req.params.id;
-      console.log('Received delete request for ID:', id); // Add this line for debugging
-      const query = { _id: new ObjectId(id) };
+    app.delete('/mycart/:_id', async (req, res) => {
+      const _id = req.params._id;
+      console.log('Received delete request for ID:', _id); // Add this line for debugging
+      const query = { _id: _id };
       const result = await cartCollection.deleteOne(query);
       console.log('Delete result:', result);
       res.send(result);
