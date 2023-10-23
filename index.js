@@ -47,6 +47,12 @@ async function run() {
       res.send(result);
     });
 
+    app.get('/products/:id', async (req, res) => {
+      const cursor = productCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     app.put('/products/:id', async (req, res) => {
       const id = req.params.id;
       console.log('Received ID:', id);
@@ -68,13 +74,15 @@ async function run() {
       res.send(result);
     });
 
-    app.get('/products/:id', async (req, res) => {
-      const cursor = productCollection.find();
+   
+
+    // Routes for cart collection
+    app.get('/mycart/:email', async (req, res) => {
+      const email = req.params.email;
+      const cursor = cartCollection.find({email:email});
       const result = await cursor.toArray();
       res.send(result);
     });
-
-    // Routes for cart collection
    
     app.post('/mycart/:email', async (req, res) => {
       // const email = req.params.email;
@@ -84,12 +92,16 @@ async function run() {
       const result = await cartCollection.insertOne(newCart);
       res.send(result);
     });
-    app.get('/mycart/:email', async (req, res) => {
-      const email = req.params.email;
-      const cursor = cartCollection.find({email:email});
-      const result = await cursor.toArray();
+
+    app.delete('/mycart/:id', async (req, res) => {
+      const id = req.params.id;
+      console.log('Received delete request for ID:', id); // Add this line for debugging
+      const query = { _id: new ObjectId(id) };
+      const result = await cartCollection.deleteOne(query);
+      console.log('Delete result:', result);
       res.send(result);
     });
+    
 
 
     // Send a ping to confirm a successful connection
