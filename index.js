@@ -28,8 +28,8 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server (optional starting in v4.7)
-    await client.connect();
-    console.log("Connected to MongoDB!");
+    // await client.connect();
+    // console.log("Connected to MongoDB!");
     const productCollection = client.db(productDB).collection("product");
     const cartCollection = client.db(productDB).collection("cart");
 
@@ -105,14 +105,16 @@ async function run() {
 
 
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } catch (error) {
-    console.error(error);
+  } finally{
+    
   }
 }
 
-run().then(() => {
+run()
+
+
   app.get('/', (req, res) => {
     res.send("Product like movie");
   });
@@ -120,4 +122,4 @@ run().then(() => {
   app.listen(port, () => {
     console.log(`Product server listening on port ${port}`);
   });
-}).catch(console.error);
+ 
